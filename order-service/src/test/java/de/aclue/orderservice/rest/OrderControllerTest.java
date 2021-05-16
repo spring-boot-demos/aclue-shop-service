@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 
 import de.aclue.orderservice.AbstractIntegrationTest;
@@ -31,31 +32,35 @@ public class OrderControllerTest extends AbstractIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(body)))
 				.andExpect(status().isCreated());
-		
+
 		List<OrderEntity> findAll = orderRepository.findAll();
 		assertThat(findAll).hasSize(1);
-		
+
 		OrderEntity actualOrder = findAll.get(0);
 		assertThat(actualOrder.getArticle()).isEqualTo(body.getArticleId());
 	}
-	
+
 	@Test
 	void updateOrder() throws Exception {
 		OrderEntity order = new OrderEntity();
 		order.setArticle(123L);
 		order = orderRepository.save(order);
-		
+
 		OrderUpdateBody body = new OrderUpdateBody();
 		body.setStatus(OrderStatus.CONFIRMED);
 
+		// execute rest call and assert response
 		mockMvc.perform(put("/orders/{id}", order.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(body)))
-		.andExpect(status().isNoContent());
-		
-		
+				.andExpect(status().isNoContent());
+
+		// assert db state
 		OrderEntity actualOrder = orderRepository.findById(order.getId()).get();
-		assertThat(actualOrder.getStatus()).isEqualTo(OrderStatus.ARTICLE_RESERVED);
+		assertThat(actualOrder.getStatus()).isEqualTo(OrderStatus.PAYED);
+		
+		// verify that mock was actually called
+		Mockito.verify(paymentAdapterMock).doPay(order.getArticle());
 	}
-	
+
 }

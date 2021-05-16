@@ -19,14 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReservationService {
 
-	private final RestTemplate restTemplate;
+	private final RestTemplate warehouseRestTemplate;
 	
 	public void reserveArticle(Long articleId, Long orderId) {
 		Reservation reservation = new Reservation();
 		reservation.setArticleId(articleId);
 		reservation.setOrderId(orderId);
 		
-		ReservationResponse response = restTemplate.postForObject("/reservations", reservation, ReservationResponse.class);
+		ReservationResponse response = warehouseRestTemplate.postForObject("/reservations", reservation, ReservationResponse.class);
 		log.info("Reservation success, id: {}", response.getReservationId());
 	}
 	

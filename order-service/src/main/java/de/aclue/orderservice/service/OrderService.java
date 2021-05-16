@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import de.aclue.orderservice.persistence.entity.OrderEntity;
 import de.aclue.orderservice.persistence.entity.OrderStatus;
 import de.aclue.orderservice.persistence.repostiory.OrderRepository;
+import de.aclue.paymentadapter.PaymentAdapter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderService {
 
+	private final PaymentAdapter paymentAdapter;
 	private final ReservationService reservationService;
 	private final OrderRepository orderRepository;
 	
@@ -25,6 +27,10 @@ public class OrderService {
 		
 		reservationService.reserveArticle(order.getArticle(), order.getId());
 		order.setStatus(OrderStatus.ARTICLE_RESERVED);
+		orderRepository.save(order);
+		
+		paymentAdapter.doPay(order.getArticle());
+		order.setStatus(OrderStatus.PAYED);
 		orderRepository.save(order);
 	}
 }
