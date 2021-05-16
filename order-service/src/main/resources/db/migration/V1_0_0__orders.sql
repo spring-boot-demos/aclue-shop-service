@@ -1,5 +1,5 @@
 CREATE TABLE orders(
 	id serial PRIMARY KEY, 
-	ARTICLE_ID serial NOT NULL,
+	ARTICLE_ID integer NOT NULL,
 	STATUS VARCHAR(255) NOT NULL
 );
