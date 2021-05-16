@@ -1,0 +1,30 @@
+{
+  "id" : "8cb0f60b-90fe-337a-a247-b072e7ae3efd",
+  "request" : {
+    "url" : "/reservations",
+    "method" : "POST",
+    "headers" : {
+      "Accept" : {
+        "equalTo" : "application/json, application/*+json"
+      },
+      "Content-Type" : {
+        "equalTo" : "application/json"
+      }
+    },
+    "bodyPatterns" : [ {
+      "equalToJson" : "{\"orderId\":1,\"articleId\":123}",
+      "ignoreArrayOrder" : true,
+      "ignoreExtraElements" : true
+    } ]
+  },
+  "response" : {
+    "status" : 201,
+    "bodyFileName" : "body-reservations-eBWqt.json",
+    "headers" : {
+      "Content-Type" : "application/json",
+      "Date" : "Sun, 16 May 2021 18:17:13 GMT",
+      "Keep-Alive" : "timeout=60"
+    }
+  },
+  "uuid" : "8cb0f60b-90fe-337a-a247-b072e7ae3efd"
+}
