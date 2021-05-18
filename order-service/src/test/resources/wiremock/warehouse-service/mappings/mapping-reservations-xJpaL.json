@@ -1,0 +1,30 @@
+{
+  "id" : "69227515-9d7d-34a9-a777-f069007f6aec",
+  "request" : {
+    "url" : "/reservations",
+    "method" : "POST",
+    "headers" : {
+      "Accept" : {
+        "equalTo" : "application/json, application/*+json"
+      },
+      "Content-Type" : {
+        "equalTo" : "application/json"
+      }
+    },
+    "bodyPatterns" : [ {
+      "equalToJson" : "{\"articleId\":123}",
+      "ignoreArrayOrder" : true,
+      "ignoreExtraElements" : true
+    } ]
+  },
+  "response" : {
+    "status" : 201,
+    "bodyFileName" : "body-reservations-xJpaL.json",
+    "headers" : {
+      "Content-Type" : "application/json",
+      "Date" : "Tue, 18 May 2021 14:09:36 GMT",
+      "Keep-Alive" : "timeout=60"
+    }
+  },
+  "uuid" : "69227515-9d7d-34a9-a777-f069007f6aec"
+}
